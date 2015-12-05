@@ -1,0 +1,6 @@
+.gitignore
+.project
+.htaccess
+*.pdf
+assets/docs/*.pdf
+assets/docs/*.png
