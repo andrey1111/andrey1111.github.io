@@ -1,0 +1,63 @@
+@media (min-width: 768px) {
+  .container {
+    width: 750px !important;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px !important;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 970px !important;
+  }
+}
+.navbar-toggle {
+  border-color: #ffffff !important;
+}
+.navbar-toggle:hover,
+.navbar-toggle:focus {
+  background-color: #428BCA !important;
+}
+.icon-bar {
+  background-color: #ffffff !important;
+}
+.navbar-default {
+  background-color: #428BCA !important;
+}
+.jumbotron {
+  background-color: #ffffff !important;
+}
+.jumbotron p {
+  font-size: 15px !important;
+}
+/*-----------------------*/
+#aval-content{
+	margin: 40px 0 20px 0;
+	line-height: 2;
+}
+.aval-header-left{
+	text-align: left;
+	font-size: 18px;
+	color: #6699FF;
+}
+.aval-article{
+	text-align: justify;
+}
+.aval-article-date{
+	font-size: 18px;
+	color: #FF6633;
+}
+.aval-article-capital-letter{
+	font-size: 1.3em;
+	color: #FF0000;
+}
+.aval-bottom-nav{
+	margin-bottom: 0px;
+	border-width: 0px;
+	border-radius: 0px;
+}
+.aval-bottom-nav-content{
+	color: #FFFFFF;
+}
