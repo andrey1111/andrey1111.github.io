@@ -1,6 +1,6 @@
 .gitignore
 .project
 .htaccess
-*.pdf
-assets/docs/*.pdf
-assets/docs/*.png
+a/css/bootstrap.css
+a/css/bootstrap-theme.css
+a/js/bootstrap.js
