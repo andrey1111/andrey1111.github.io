@@ -1,3 +1,7 @@
 .gitignore
 .project
 .htaccess
+a/css/*.jar
+a/css/bash.txt
+a/js/*.jar
+a/js/bash.txt

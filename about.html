@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html lang="ru">
 	<head>
-		<meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="Content-language" content="ru-RU">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Введение в негэнтропию</title>
+		<meta http-equiv="imagetoolbar" content="false">
+		<meta name="copyright" content="a-val.ru">
+		<meta name="author" content="a-val.ru">
+		<meta name="robots" content="index, follow">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Небольшое пояснение, что ждать посетителю этого сайта.">
+		<title>О сайте</title>
+		<link rel="sitemap" href="./sitemap.xml" title="Sitemap" type="application/xml">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link href='https://fonts.googleapis.com/css?family=Roboto+Mono&subset=latin,cyrillic-ext,latin-ext' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="./a/css/bootstrap.css">
 		<link rel="stylesheet" href="./a/css/bootstrap-theme.css">
+		<link rel="stylesheet" href="./a/css/main.css?v=1">
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -17,29 +27,77 @@
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-top" aria-expanded="false" aria-controls="navbar">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="./">a-val.ru</a>
+					<a class="navbar-brand" href="./"><span class="aval-nav-text">a-val.ru</span></a>
 				</div>
-				<div id="navbar" class="navbar-collapse collapse">
+				<div id="navbar-top" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="./it_and_businnes.html">IT и бизнес</a></li>
-						<li><a href="./free_flow.html">Поток</a></li>
-						<li><a href="./about.html">О сайте</a></li>
+						<li><a href="../structure"><span class="aval-nav-text">Структуры</span></a></li>
+						<li><a href="../details"><span class="aval-nav-text">Детали</span></a></li>
+						<!--<li><a href="../ff"><span class="aval-nav-text">Свободный поток</span></a></li>-->
+						<li><a href="../about.html"><span class="aval-nav-text">О сайте</span></a></li>
 					</ul>
 				</div>
 			</div>
 		</nav>
 		<div class="container">
-			<div class="jumbotron">
-				hi
+			<div id="aval-content">
+				<div class="row">
+					<div class="col-xs-12">
+						<h1 class="aval-header-article">О сайте</h1>
+					</div>
+					<div class="col-xs-12">
+						<p class="aval-article">
+							<span class="aval-article-capital-word">Этот сайт </span> 
+							- блог о структурах.
+							<br />
+							Самых разных структурах, которые окружают нас, с которыми мы взаимодействуем, которые влияют на нас, и на которые влияем мы.
+							<br />
+							В большей степени будут разбираться структуры, с которыми автор имел дело в силу профессиональной деятельности - экономические, в том числе 
+							материальные, товарные и денежные потоки, трудовые и капитальные ресурсы.
+							Возможно будут затронуты проблемы NL и распознавания образов как процессы анализа, синтеза и сравнения.
+							<br />
+							До недавнего времени в изучении структур автор был ограничен замечательной отечественной платформой 1С и её предустановленными метриками, 
+							но с какого-то момента в область профессионального интереса попали web, мобильные технологии и мир вероятностно-статистических исследований и 
+							машинного обучения, реализованные в открытой среде 
+								<noindex><a href="https://www.r-project.org/" target="_blank">R</a></noindex></b>.
+							<br />
+							Таким образом, на сайте будут представлены материалы, 
+							отражающие профессиональный опыт и личные интересы автора.<br />
+							Структурно статьи группируются по трем разделам:<br />
+							<ul>
+								<li><a href="./">общая лента статей, в убывающем хронологическом порядке</a></li>
+								<li><a href="./structure">лента статей по структурам и их взаимодействию, в убывающем хронологическом порядке</a></li>
+								<li><a href="./details">лента статей по различным аспектам технической реализации структур и их исследованию, в убывающем хронологическом порядке</a></li>
+							</ul>
+						</p>	
+					</div>
+					<div class="col-xs-12">
+						<h3 class="aval-footer-article">28.12.2015</h3>
+					</div>
+				</div>
 			</div>
 		</div>
+		<nav class="navbar navbar-default aval-bottom-nav">
+			<div class="container">
+				<div class="navbar-default">
+					<noindex>
+					<ul class="nav navbar-nav navbar-right">
+						<!--<li><a href="https://www.facebook.com/profile.php?id=100010810960507" target="_blank"><i class="fa fa-facebook fa-lg aval-bottom-nav-content"></i></a></li>
+						<li><a href="" target="_blank"><i class="fa fa-vk fa-lg aval-bottom-nav-content"></i></a></li>-->
+					</ul>
+					<noindex>
+				</div>
+				
+			</div>
+		</nav>	
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="./a/js/bootstrap.js"></script>
+		<script src="./a/js/main.js?v=1"></script>
 	</body>
 </html>
