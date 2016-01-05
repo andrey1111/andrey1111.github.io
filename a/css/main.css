@@ -51,7 +51,7 @@ body {
 .aval-header-article {
 	text-align: center;
 	font-size: 18px;
-	color: #FF6633;
+	color: #FF0000;
 }
 .aval-footer-article {
 	text-align: right;
@@ -72,7 +72,7 @@ body {
 }
 .aval-article-capital-letter {
 	font-size: 1.0em;
-	color: #FF0000;
+	color: #FF6633;
 }
 .aval-nav-text {
 	color: #FFFFFF;

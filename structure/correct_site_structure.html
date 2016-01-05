@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="Content-language" content="ru-RU">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="imagetoolbar" content="false">
+		<meta name="copyright" content="a-val.ru">
+		<meta name="author" content="a-val.ru">
+		<meta name="robots" content="index, follow">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Статья описывает правильную с точки зрения поисковых систем структуру сайта. Безотносительно к его тематике. Основано на личном опыте.">
+		<title>О правильной структуре сатов</title>
+		<link rel="sitemap" type="application/xml" href="../sitemap.xml" title="Sitemap">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Mono&subset=latin,cyrillic-ext,latin-ext">
+		<link rel="stylesheet" type="text/css" href="../a/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="../a/css/bootstrap-theme.css">
+		<link rel="stylesheet" type="text/css" href="../a/css/main.css?v=1">
+		<!--[if lt IE 9]>
+			<script type="text/javascript" src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script type="text/javascript" src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-top" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="../"><span class="aval-nav-text">a-val.ru</span></a>
+				</div>
+				<div id="navbar-top" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="../structure"><span class="aval-nav-text">Структуры</span></a></li>
+						<li><a href="../details"><span class="aval-nav-text">Детали</span></a></li>
+						<li><a href="../about.html"><span class="aval-nav-text">О сайте</span></a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="container">
+			<div id="aval-content">
+				<div class="row">
+					<div class="col-xs-12">
+						<h1 class="aval-header-article">О правильной структуре сайта.</h1>
+					</div>
+					<div class="col-xs-12">
+						<p class="aval-article">
+							<span class="aval-article-capital-word">
+								Это статья
+							</span>	
+							 о корректной структуре сайта, 
+							без которой невозможно сколько-нибудь удачно представить его в поисковых системах. Что очень важно в современном мире.
+							<br />
+							Структура будет представлена в иерархическом виде с короткими пояснениями, не претендующими на всеобемлющее SEO-продвижение. 
+							<br />
+							<ul>
+								<li>
+									<span class="aval-article-capital-letter">Сайт</span> имеет иерархическую структуру, которая представлена ниже:
+								</li>
+								<ul>
+									<li>
+										<span class="aval-article-capital-letter">Домен</span> — характерное название сайта (как утверждают знающие люди, для ранжирования это не очень важно), 
+										указать регистр домена, выбрать основное зеркало с WWW или без него 
+										<noindex>
+											<a href="https://webmaster.yandex.ru" target="_blank">
+												здесь
+											</a>
+										</noindex> и 
+										<noindex>
+											<a href="https://www.google.com/webmasters" target="_blank">
+												здесь
+											</a>
+										</noindex>.
+									</li>
+									<li>
+										<span class="aval-article-capital-letter">Протокол</span> - HTTP или HTTPS, по которому сайт отдается. На данный момент предпочтительнее HTTPS, рекомендации 
+										<noindex>
+											<a href="https://productforums.google.com/forum/#!topic/webmaster-ru/5noNkWqW_w8" target="_blank">
+												здесь
+											</a>
+										</noindex>.
+									</li>
+									<li>
+										файл <span class="aval-article-capital-letter">robots.txt</span> - указывается, как поисковые системы должны просматривать 
+										и индексировать сайт.
+									</li>
+									<li>
+										файл <span class="aval-article-capital-letter">sitemap.xml</span> - указывается иерархическая структура страниц сайта, 
+										представленных их уникальными адресами (URL).
+									</li>
+									<li>
+										<span class="aval-article-capital-word">Коллекция</span> <span class="aval-article-capital-letter">страниц</span> 
+										сайта - логичная иерархия страниц может повлиять на индексацию и поисковое ранжирование.
+										<br />
+										Каждая страница должна иметь следующую структуру:
+									</li>
+									<ul>
+										<li>
+											<span class="aval-article-capital-letter">URL страницы</span> — уникальный адрес страницы. Существуют приоритетные правила формирования, которые могут повлиять на ранжирование 
+											страниц в поисковой выдаче.
+										</li>
+										<li>
+											Правильный <span class="aval-article-capital-letter">статус ответа</span> в http заголовках - 200, 301, 404 и так далее.
+										</li>
+										<li>
+											Элемент <span class="aval-article-capital-letter">DOCTYPE</span> - предпочтителен тип, соответствующий html 5.
+										</li>
+										<li>
+											Элемент <span class="aval-article-capital-letter">html</span> - контейнер для контента страницы.
+										</li>
+										<ul>
+											<li>
+												Элемент <span class="aval-article-capital-letter">head</span>.
+												<ul>
+													<li>
+														Элемент <span class="aval-article-capital-letter">title</span> — заголовок страницы, отображающийся в специальном окне браузера. 
+														Каждая страница должна иметь уникальное содержание со строго ограниченным количеством символов.
+													</li>
+													<li>
+														<span class="aval-article-capital-word">Коллекция</span> 
+														элементов 
+														<span class="aval-article-capital-letter">meta</span> 
+														со специфическими атрибутами 
+														<span class="aval-article-capital-letter">name</span>, 
+														<span class="aval-article-capital-letter">content</span>, 
+														<span class="aval-article-capital-letter">http-equiv</span>. 
+														На каждой странице 
+														значения должны быть конкретными - в соответствии с ее содержанием. Например:
+														<ul>
+															<li>
+																<span class="aval-article-capital-letter">name</span>="description" 
+																<span class="aval-article-capital-letter">content</span>="Описание страницы - уникальное, со строго ограниченным количеством символов".
+															</li>
+															<li>
+																<span class="aval-article-capital-letter">name</span>="copyright" 
+																<span class="aval-article-capital-letter">content</span>="yourdomain.com".
+															</li>
+															<li>
+																<span class="aval-article-capital-letter">name</span>="author" 
+																<span class="aval-article-capital-letter">content</span>="yourdomain.com".
+															</li>
+															<li>
+																<span class="aval-article-capital-letter">name</span>="robots" 
+																<span class="aval-article-capital-letter">content</span>="index|noindex, follow|nofollow".
+															</li>
+															<li>
+																<span class="aval-article-capital-letter">http-equiv</span>="Content-Type" 
+																<span class="aval-article-capital-letter">content</span>="text/html; charset=utf-8".
+															</li>
+															<li>
+																<span class="aval-article-capital-letter">http-equiv</span>="X-UA-Compatible" 
+																<span class="aval-article-capital-letter">content</span>="IE=edge,chrome=1".
+															</li>
+															<li>
+																<span class="aval-article-capital-letter">http-equiv</span>="imagetoolbar" 
+																<span class="aval-article-capital-letter">content</span>="true|false".
+															</li>
+														</ul>
+													</li>
+													<li>
+														<span class="aval-article-capital-word">Коллекция</span> 
+														элементов 
+														<span class="aval-article-capital-letter">link</span> 
+														со специфическими атрибутами 
+														<span class="aval-article-capital-letter">rel</span>, 
+														<span class="aval-article-capital-letter">href</span>, 
+														<span class="aval-article-capital-letter">title</span>, 
+														<span class="aval-article-capital-letter">media</span>, 
+														<span class="aval-article-capital-letter">hreflang</span>, 
+														<span class="aval-article-capital-letter">type</span>. 
+														На каждой странице 
+														значения должны быть конкретными - в соответствии с ее содержанием. Например:
+														<ul>
+															<li>
+																<span class="aval-article-capital-letter">rel</span>="sitemap" 
+																<span class="aval-article-capital-letter">href</span>="URL к файлу sitemap.xml"
+																<span class="aval-article-capital-letter">title</span>="application/xml".
+															</li>
+															<li>
+																<span class="aval-article-capital-letter">rel</span>="shortcut icon" 
+																<span class="aval-article-capital-letter">href</span>="URL к файлу favicon.ico".
+															</li>
+															<li>
+																<span class="aval-article-capital-letter">rel</span>="apple-touch-icon" 
+																<span class="aval-article-capital-letter">href</span>="URL к файлу logo.png".
+															</li>
+															<li>
+																<span class="aval-article-capital-letter">rel</span>="canonical" 
+																<span class="aval-article-capital-letter">href</span>="URL к канонической странице".
+															</li>
+															<li>
+																<span class="aval-article-capital-letter">rel</span>="alternate" 
+																<span class="aval-article-capital-letter">href</span>="URL к альтернативной странице, например к мобильной версии" 
+																<span class="aval-article-capital-letter">media</span>="only screen and (max-width: 640px)" 
+																<span class="aval-article-capital-letter">hreflang</span>="ru".
+															</li>
+															<li>
+																<span class="aval-article-capital-letter">rel</span>="prev" 
+																<span class="aval-article-capital-letter">href</span>="для страниц с пагинацией - URL к предыдущей".
+															</li>
+															<li>
+																<span class="aval-article-capital-letter">rel</span>="next" 
+																<span class="aval-article-capital-letter">href</span>="для страниц с пагинацией - URL к следующей".
+															</li>
+															<li>
+																<span class="aval-article-capital-letter">rel</span>="stylesheet" 
+																<span class="aval-article-capital-letter">type</span>="text/css" 
+																<span class="aval-article-capital-letter">href</span>="URL к файлу .css".
+																<br />
+																В файлах <span class="aval-article-capital-letter">.css</span> не должно быть ошибок в коде, 
+																файлы необходимо по возможности склеить в один и минифицировать 
+																(инструмент compiler.jar можно взять 
+																<noindex>
+																	<a href="http://yui.github.io/yuicompressor/" target="_blank">
+																		здесь
+																	</a>
+																</noindex>
+																). 
+																При отдаче файлы желательно сжать возможностями веб-сервера и указать в http-заголовке 
+																корректный Expires.
+															</li>
+														</ul>
+													</li>
+													<li>
+														<span class="aval-article-capital-word">Коллекция</span> 
+														элементов <span class="aval-article-capital-letter">script</span>, например:
+														<ul>
+															<li>
+																<span class="aval-article-capital-letter">type</span>="text/javascript" 
+																<span class="aval-article-capital-letter">src</span>="URL к файлу .js".
+																<br />
+																В файлах <span class="aval-article-capital-letter">.js</span> не должно быть ошибок в коде, 
+																файлы необходимо по возможности склеить в один и минифицировать 
+																(инструмент compiler.jar можно взять
+																<noindex>
+																	<a href="https://developers.google.com/closure/compiler/docs/gettingstarted_app" target="_blank">
+																		здесь
+																	</a>
+																</noindex>	
+																). 
+																При отдаче файлы желательно сжать возможностями веб-сервера и указать в http-заголовке 
+																корректный Expires.
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+											<li>
+												Элемент <span class="aval-article-capital-letter">body</span>:
+												<ul>
+													<li>
+														<span class="aval-article-capital-word">Коллекция</span> элементов заголовков 
+														<span class="aval-article-capital-letter">h1...h6</span>, 
+														элемент h1 должен быть один на страницу и как можно ближе к ее началу.
+													</li>
+													<li>
+														<span class="aval-article-capital-word">Коллекция</span> элементов 
+														<span class="aval-article-capital-letter">a</span> 
+														с обязательным атрибутом <span class="aval-article-capital-letter">title</span> 
+														и релевантным анкором (текстом ссылки).
+														<br /> 
+														Ссылки на другие ресурсы сайта не должны адресовать страницы, 
+														которые отдают 403 или 404.
+														<br /> 
+														Cсылки на другие ресурсы более высокого ранга (fb, vk, twitter) должны быть обрамлены тегами 
+														<span class="aval-article-capital-letter">noindex</span>.
+													</li>
+													<li>
+														<span class="aval-article-capital-word">Коллекция</span> картинок 
+														<span class="aval-article-capital-letter">img</span>.
+														<br />
+														Файлы (jpg, jpeg, png, gif) должны быть оптимизированы в соответствии с 
+														<noindex>
+															<a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization?hl=ru">
+																этими рекомендациями
+															</a>
+														</noindex> 
+														с обязательным атрибутом <span class="aval-article-capital-letter">alt</span>.
+													</li>
+													<li>
+														<span class="aval-article-capital-letter">Текстовое</span> содержание может располагаться в различных <span class="aval-article-capital-letter">html-элементах</span>, 
+														основной текст должен находиться как можно ближе к началу страницы 
+														(возможен перенос контента при помощи css вниз страницы, 
+														если эта информация не так важна пользователю).
+														<br />
+														Следует помнить, что именно текстовое содержание дает поисковым системам семантику страницы.
+														<br />
+														Они учитывают морфологию лексем и синтаксис предложений. 
+														Важна динамика изменения контента, она демонстрирует изменения страницы во времени и "не забывается".
+														<br />
+														При составлении текстов надо стараться избегать дублированния, 
+														при этом поисковые системы корректно определяют общий для нескольких  страниц 
+														контент (меню, навигация).
+														<br /> 
+														Поисковые системы пытаются определить семантику по грамматической структуре текста. 
+														Однако грамматика русского языка, как языка синтетического, 
+														значительно отличается от грамматики английского, как языка аналитического. 
+														Поэтому при составлении текстов для российских поисковых систем можно ограничится только словоформами (морфемами). 
+														Англоязычные же, скорее всего, учитывает в том числе и синтаксис, то есть порядок слов в предложениях.
+													</li>
+													<li>
+														<span class="aval-article-capital-letter">Микроразметка</span> все более настойчиво 
+														вторгается в семантическую область страниц, на которых представлены товары и услуги.
+														<br />
+														Посмотрите 
+														<noindex>
+															<a href="http://schema.org/" target="_blank">рекомендации</a> 
+														</noindex>
+														по формированию микроразметки для ваших товаров и услуг.
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</ul>
+								</ul>
+							</ul>
+							<span class="aval-article-capital-word">Реализация</span> приведенной выше структуры гарантировано избавит сайт от ошибок, 
+							наличие которых будет мешать достойно представлять в сети Интернет организацию или человека.
+						</p>	
+					</div>
+					<div class="col-xs-12">
+						<h3 class="aval-footer-article">05.01.2016</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav class="navbar navbar-default aval-bottom-nav">
+			<div class="container">
+				<div class="navbar-default">
+					<noindex>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="https://www.facebook.com/profile.php?id=100010810960507" target="_blank">
+								<i class="fa fa-facebook fa-lg aval-bottom-nav-content"></i>
+							</a>
+						</li>
+					</ul>
+					</noindex>
+				</div>
+			</div>
+		</nav>	
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script type="text/javascript" src="../a/js/bootstrap.js"></script>
+		<script type="text/javascript" src="../a/js/main.js?v=1"></script>
+	</body>
+</html>
