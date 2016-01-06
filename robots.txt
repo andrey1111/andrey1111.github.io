@@ -3,13 +3,10 @@ Host: a-val.ru
 Sitemap: http://a-val.ru/sitemap.xml
 
 User-agent:*
-Host: a-val.ru
 Sitemap: http://a-val.ru/sitemap.xml
 
 User-agent: GoogleBot
-Host: a-val.ru
 Sitemap: http://a-val.ru/sitemap.xml
 
 User-agent: AhrefsBot
-Host: a-val.ru
 Sitemap: http://a-val.ru/sitemap.xml
