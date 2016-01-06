@@ -1,12 +1,5 @@
 User-agent: Yandex
-Host: a-val.ru
-Sitemap: http://a-val.ru/sitemap.xml
-
-User-agent:*
-Sitemap: http://a-val.ru/sitemap.xml
-
 User-agent: GoogleBot
-Sitemap: http://a-val.ru/sitemap.xml
-
-User-agent: AhrefsBot
+User-agent:*
+Host: a-val.ru
 Sitemap: http://a-val.ru/sitemap.xml
