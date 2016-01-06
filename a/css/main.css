@@ -43,6 +43,66 @@ body {
 	margin: 40px 0 20px 0;
 	line-height: 2;
 }
+.aval-selected-paragraph {
+	margin: 1em 0 1em 0;
+	border-left: 1em solid #FF0000;
+	padding: 1em 1em 1em 2em ;
+	background: #EEEEEE;
+}
+.aval-1S-paragraph {
+	margin: 1em 0 1em 0;
+	border: 1px solid #000000;
+	padding: 1em 1em 1em 1em ;
+	background: #FFFFFF;
+}
+.aval-1S-paragraph-black-text {
+	color: #000000;
+}
+.aval-1S-paragraph-blue-text {
+	color: #3333FF;
+}
+.aval-1S-paragraph-red-text {
+	color: #FF0000;
+}
+.aval-1S-paragraph-green-text {
+	color: #339966;
+}
+.aval-pgAdmin-paragraph {
+	margin: 1em 0 1em 0;
+	border: 1px solid #000000;
+	padding: 1em 1em 1em 1em ;
+	background: #FFFFFF;
+}
+.aval-pgAdmin-paragraph-black-text {
+	color: #000000;
+}
+.aval-pgAdmin-paragraph-blue-text {
+	color: #330099;
+}
+.aval-pgAdmin-paragraph-lilac-text {
+	color: #9933CC;
+}
+.aval-pgAdmin-paragraph-green-text {
+	color: #339966;
+}
+.aval-R-paragraph {
+	margin: 1em 0 1em 0;
+	border: 1px solid #000000;
+	padding: 1em 1em 1em 1em ;
+	background: #FFFFFF;
+}
+.aval-R-paragraph-black-text {
+	color: #000000;
+}
+.aval-R-paragraph-blue-text {
+	color: #3300CC;
+}
+.aval-R-paragraph-green-text {
+	color: #339966;
+}
+.aval-R-paragraph-grey-text {
+	color: #999999;
+}
 .aval-header-flow {
 	text-align: left;
 	font-size: 18px;
@@ -83,5 +143,5 @@ body {
 	border-radius: 0px;
 }
 .aval-bottom-nav-content {
-	color: #FFFFFF;
+	color: #FFFFFF !important;
 }

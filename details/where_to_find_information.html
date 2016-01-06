@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="Content-language" content="ru-RU">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="imagetoolbar" content="false">
+		<meta name="copyright" content="a-val.ru">
+		<meta name="author" content="a-val.ru">
+		<meta name="robots" content="index, follow">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="1С как источник данных (метрик) для дальнейшего тестирования и поиска закономерностей.">
+		<title>1С и вероятностно-статистическое тестирование</title>
+		<link rel="sitemap" href="../sitemap.xml" title="Sitemap" type="application/xml">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Mono&subset=latin,cyrillic-ext,latin-ext' type='text/css'>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="../a/css/aval_min.css">
+		<!--
+		<link rel="stylesheet" type="text/css" href="../a/css/bootstrap-theme.css">
+		<link rel="stylesheet" type="text/css" href="../a/css/main.css">
+		-->
+		<!--[if lt IE 9]>
+			<script type="text/javascript" src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script type="text/javascript" src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-top" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="../"><span class="aval-nav-text">a-val.ru</span></a>
+				</div>
+				<div id="navbar-top" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="../structure"><span class="aval-nav-text">Структуры</span></a></li>
+						<li><a href="../details"><span class="aval-nav-text">Детали</span></a></li>
+						<li><a href="../about.html"><span class="aval-nav-text">О сайте</span></a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="container">
+			<div id="aval-content">
+				<div class="row">
+					<div class="col-xs-12">
+						<h1 class="aval-header-article">1С как источник данных для вероятностно-статистических исследований</h1>
+					</div>
+					<div class="col-xs-12">
+						<p class="aval-article">
+							<span class="aval-article-capital-word">Эта статья</span> расскажет, как получить данные из 1С для последующей обработки в среде 
+							<noindex>
+								<a href="https://www.r-project.org/" target="_blank"><b>R</b></a>.
+							</noindex>
+							<br />
+							На протяжении последних двадцати лет в России куплены и инсталлированы десятки, если не сотни, тысяч копий 
+							информационной бизнес-платформы 1С различных конфигураций.
+							<br />
+							Даже в соседнем магазине шаговой доступности площадью 50 кв. метров скорее всего есть 1С, которая частично отражает логистику, 
+							и очень достоверно отражает продажи (иначе зачем она нужна).
+							<br />
+							Понятно, что большая часть из этих инсталляций - это бухгалтерские версии 1С. Но и эти данные можно использовать для 
+							формирования начальных метрик предприятия.
+							<br />
+							<span class="aval-article-capital-word">Платформы и среды:</span>
+							<br />
+							<ul>
+								<li>
+									1С 8.1 (клиент-серверный вариант) version 8.1.15.14
+								</li>
+								<li>
+									СУБД PostgreSQL version 8.3.8
+								</li>
+								<li>
+									pgAdmin III version 1.18.1
+								</li>
+								<li>
+									среда для вероятностно-статистических исследований R version 3.2.3
+								</li>
+								<li>
+									RStudio version 0.99.489
+								</li>
+							</ul>
+							Версии 1С и PostgreSQL не самые последние, что, впрочем, не мешает продемонстрировать принцип работы в R 
+							с самой массовой в России информационной платформой.
+							<div class="aval-selected-paragraph">
+								<b>Важно!!!</b>
+								<br />
+								Не подключайтесь к базе данных, которую 1С использует непосредственно для OLTP.
+								<br />
+								Для работы в R cоздайте отдельную исследовательскую базу данных 
+								и настройте ее синхронизацию с основной базой при помощи проверенных, гарантированно не влияющих на исходные данные, 
+								инструментов в том объеме и с той частотой обновления, которые считаете необходимыми и достаточными.
+							</div>
+							Для получения данных будет использовано непосредственное подключение к базе данных на сервере в той же локальной сети, 
+							в которой находится компьютер с R.
+							<br />
+							Для этого мы получим структуру данных 1С, создадим представление в базе данных, логически объединяющее несколько таблиц, и 
+							подключимся из R к созданному представлению, чтобы получить данные для дальнейших исследований.
+							<br />
+							<br />
+							<span class="aval-article-capital-word">Получение структуры данных 1С.</span>
+							<br />
+							Для начала работы нам необходимо получить структуру данных 1С. Для этого скачаем готовую 
+							<noindex>
+								<a href="http://v8.1c.ru/metod/faq2/answer.jsp?id=493" target="_blank"><b>обработку</b></a>
+							</noindex>
+							 (так в терминологии 1С называются небольшие подпрограммы, выполняющие некоторые законченные действия в среде 1С).
+							<br />
+							Код обработки:
+							<div class="aval-1S-paragraph aval-1S-paragraph-blue-text">
+								<span class="aval-1S-paragraph-red-text">Процедура</span> ВывестиСтруктуруТаблиц<span class="aval-1S-paragraph-red-text">(</span>Команда<span class="aval-1S-paragraph-red-text">)</span>
+									<br />
+									<br />
+									МассивИменМетаданных <span class="aval-1S-paragraph-red-text">= Новый</span> Массив<span class="aval-1S-paragraph-red-text">();</span>
+									<br />
+									<br />
+									<span class="aval-1S-paragraph-green-text">
+									// Если нужна структура таблиц только некоторых объектов конфигурации
+									</span>
+									<br />
+									<span class="aval-1S-paragraph-green-text">
+									// их можно перечислить в массиве имен метаданных
+									</span>
+									<br />
+									<br />
+									<span class="aval-1S-paragraph-green-text">
+									//МассивИменМетаданных.Добавить("Справочник.Номенклатура");
+									</span>
+									<br />
+									<span class="aval-1S-paragraph-green-text">
+									//МассивИменМетаданных.Добавить("Документ.РеализацияТоваровУслуг");
+									</span>
+									<br />
+									<br />
+									ТекстовыйДокумент 
+									<span class="aval-1S-paragraph-red-text">=</span> 
+									ПолучитьСтруктуруТаблицНаСервере<span class="aval-1S-paragraph-red-text">(</span>МассивИменМетаданных<span class="aval-1S-paragraph-red-text">);</span>
+									<br />
+									<br />
+									ТекстовыйДокумент<span class="aval-1S-paragraph-red-text">.</span>Показать<span class="aval-1S-paragraph-red-text">(</span>
+									<span class="aval-1S-paragraph-black-text">"Структура хранения базы данных"</span><span class="aval-1S-paragraph-red-text">);</span>
+									<br />
+									<br />
+								<span class="aval-1S-paragraph-red-text">КонецПроцедуры</span>
+								<br />
+								<br />
+								<span class="aval-1S-paragraph-red-text">Функция</span> 
+								ПолучитьСтруктуруТаблицНаСервере<span class="aval-1S-paragraph-red-text">(</span>МассивИменМетаданных<span class="aval-1S-paragraph-red-text">)</span>
+								<br />
+								<br />
+									ТекстовыйДокумент 
+									<span class="aval-1S-paragraph-red-text">= Новый</span> 
+									ТекстовыйДокумент<span class="aval-1S-paragraph-red-text">;</span>
+									<br />
+									<br />
+									<span class="aval-1S-paragraph-green-text">// Таблица значений, содержащая таблицы указанного объекта</span>
+									<br />
+									Таблицы 
+									<span class="aval-1S-paragraph-red-text">=</span> 
+									ПолучитьСтруктуруХраненияБазыДанных<span class="aval-1S-paragraph-red-text">(</span>МассивИменМетаданных<span class="aval-1S-paragraph-red-text">);</span>
+									<br />
+									<br />
+									<span class="aval-1S-paragraph-red-text">Для Каждого</span> Таблица <span class="aval-1S-paragraph-red-text">Из</span> Таблицы <span class="aval-1S-paragraph-red-text">Цикл</span>
+										<br />
+										<br />
+										ТекстовыйДокумент<span class="aval-1S-paragraph-red-text">.</span>ДобавитьСтроку<span class="aval-1S-paragraph-red-text">(</span><span class="aval-1S-paragraph-black-text">""</span>
+										<span class="aval-1S-paragraph-red-text">);</span>
+										<br />
+										<br />
+										ТекстовыйДокумент<span class="aval-1S-paragraph-red-text">.</span>ДобавитьСтроку<span class="aval-1S-paragraph-red-text">(</span>
+										<span class="aval-1S-paragraph-black-text">"Таблица : "</span> 
+										<span class="aval-1S-paragraph-red-text">+</span> 
+										Таблица<span class="aval-1S-paragraph-red-text">.</span>ИмяТаблицы 
+										<span class="aval-1S-paragraph-red-text">+</span> 
+										<br />
+										<span class="aval-1S-paragraph-black-text">", Имя таблицы хранения: "</span> 
+										<span class="aval-1S-paragraph-red-text">+</span> 
+										Таблица<span class="aval-1S-paragraph-red-text">.</span>ИмяТаблицыХранения 
+										<span class="aval-1S-paragraph-red-text">+</span>
+										<br />
+										<span class="aval-1S-paragraph-black-text">", Назначение: "</span> 
+										<span class="aval-1S-paragraph-red-text">+</span> 
+										Таблица<span class="aval-1S-paragraph-red-text">.</span>Назначение<span class="aval-1S-paragraph-red-text">);</span>
+										<br />
+										<br />
+										ТекстовыйДокумент<span class="aval-1S-paragraph-red-text">.</span>ДобавитьСтроку<span class="aval-1S-paragraph-red-text">(</span><span class="aval-1S-paragraph-black-text">"- поля: "</span>
+										<span class="aval-1S-paragraph-red-text">);</span>
+										<br />
+										ПоляТаблицы 
+										<span class="aval-1S-paragraph-red-text">=</span> 
+										Таблица<span class="aval-1S-paragraph-red-text">.</span>Поля<span class="aval-1S-paragraph-red-text">;</span>
+										<br />
+										<span class="aval-1S-paragraph-red-text">Для Каждого</span> 
+										Поле 
+										<span class="aval-1S-paragraph-red-text">Из</span> 
+										ПоляТаблицы 
+										<span class="aval-1S-paragraph-red-text">Цикл</span>
+										<br />
+										<br />	
+										ТекстовыйДокумент<span class="aval-1S-paragraph-red-text">.</span>ДобавитьСтроку<span class="aval-1S-paragraph-red-text">(</span><span class="aval-1S-paragraph-black-text">"   "</span> 
+										<span class="aval-1S-paragraph-red-text">+</span> 
+										Поле<span class="aval-1S-paragraph-red-text">.</span>ИмяПоля 
+										<span class="aval-1S-paragraph-red-text">+</span>
+										<br />
+										<span class="aval-1S-paragraph-black-text">" ("</span> 
+										<span class="aval-1S-paragraph-red-text">+</span> 
+										Поле<span class="aval-1S-paragraph-red-text">.</span>ИмяПоляХранения 
+										<span class="aval-1S-paragraph-red-text">+</span> 
+										<span class="aval-1S-paragraph-black-text">")"</span><span class="aval-1S-paragraph-red-text">);</span>
+										<br />
+										<br />	
+										<span class="aval-1S-paragraph-red-text">КонецЦикла;</span>
+										<br />
+										<br />
+										ТекстовыйДокумент<span class="aval-1S-paragraph-red-text">.</span>ДобавитьСтроку<span class="aval-1S-paragraph-red-text">(</span><span class="aval-1S-paragraph-black-text">"- индексы: "
+										</span><span class="aval-1S-paragraph-red-text">);</span> 
+										<br />
+										ИндексыТаблицы 
+										<span class="aval-1S-paragraph-red-text">=</span> 
+										Таблица<span class="aval-1S-paragraph-red-text">.</span>Индексы<span class="aval-1S-paragraph-red-text">;</span>
+										<br />
+										<span class="aval-1S-paragraph-red-text">Для Каждого</span> 
+										Индекс 
+										<span class="aval-1S-paragraph-red-text">Из</span> 
+										ИндексыТаблицы 
+										<span class="aval-1S-paragraph-red-text">Цикл</span>
+										<br />
+										<br />
+										ТекстовыйДокумент<span class="aval-1S-paragraph-red-text">.</span>ДобавитьСтроку<span class="aval-1S-paragraph-red-text">(</span><span class="aval-1S-paragraph-black-text">"   "</span> 
+										<span class="aval-1S-paragraph-red-text">+</span> 
+										Индекс<span class="aval-1S-paragraph-red-text">.</span>ИмяИндексаХранения<span class="aval-1S-paragraph-red-text">);</span>
+										<br />
+										<br />
+										СтрокаИндекса 
+										<span class="aval-1S-paragraph-red-text">=</span> 
+										<span class="aval-1S-paragraph-black-text">""</span><span class="aval-1S-paragraph-red-text">;</span>
+										<br />
+										СтрокаХраненияИндекса 
+										<span class="aval-1S-paragraph-red-text">=</span> 
+										<span class="aval-1S-paragraph-black-text">""</span><span class="aval-1S-paragraph-red-text">;</span>
+										<br />
+										ПоляИндекса 
+										<span class="aval-1S-paragraph-red-text">=</span> 
+										Индекс<span class="aval-1S-paragraph-red-text">.</span>Поля<span class="aval-1S-paragraph-red-text">;</span>
+										<br />
+										<span class="aval-1S-paragraph-red-text">Для Каждого</span> 
+										ПолеИндекса 
+										<span class="aval-1S-paragraph-red-text">Из</span> 
+										ПоляИндекса 
+										<span class="aval-1S-paragraph-red-text">Цикл</span>
+										<br />
+										<br />
+										<span class="aval-1S-paragraph-red-text">Если</span> 
+										СтрокаИндекса 
+										<span class="aval-1S-paragraph-red-text">&lt;&gt;</span> 
+										<span class="aval-1S-paragraph-black-text">""</span> 
+										<span class="aval-1S-paragraph-red-text">Тогда</span>
+										<br />
+										СтрокаИндекса 
+										<span class="aval-1S-paragraph-red-text">=</span> 
+										СтрокаИндекса 
+										<span class="aval-1S-paragraph-red-text">+</span> 
+										<span class="aval-1S-paragraph-black-text">" + "</span><span class="aval-1S-paragraph-red-text">;</span>
+										<br />
+										<span class="aval-1S-paragraph-red-text">КонецЕсли;</span>
+										<br />
+										СтрокаИндекса 
+										<span class="aval-1S-paragraph-red-text">=</span> 
+										СтрокаИндекса 
+										<span class="aval-1S-paragraph-red-text">+</span> 
+										ПолеИндекса<span class="aval-1S-paragraph-red-text">.</span>ИмяПоля<span class="aval-1S-paragraph-red-text">;</span>
+										<br />
+										<br />
+										<span class="aval-1S-paragraph-red-text">Если</span> 
+										СтрокаХраненияИндекса 
+										<span class="aval-1S-paragraph-red-text">&lt;&gt;</span> 
+										<span class="aval-1S-paragraph-black-text">""</span> 
+										<span class="aval-1S-paragraph-red-text">Тогда</span>
+										<br />
+										СтрокаХраненияИндекса 
+										<span class="aval-1S-paragraph-red-text">=</span> 
+										СтрокаХраненияИндекса 
+										<span class="aval-1S-paragraph-red-text">+</span> 
+										<span class="aval-1S-paragraph-black-text">" + "</span><span class="aval-1S-paragraph-red-text">;</span>
+										<br />
+										<span class="aval-1S-paragraph-red-text">КонецЕсли;</span>
+										<br />
+										СтрокаХраненияИндекса 
+										<span class="aval-1S-paragraph-red-text">=</span> 
+										СтрокаХраненияИндекса 
+										<span class="aval-1S-paragraph-red-text">+</span> 
+										ПолеИндекса<span class="aval-1S-paragraph-red-text">.</span>ИмяПоляХранения<span class="aval-1S-paragraph-red-text">;</span>
+										<br />
+										<br />
+										<span class="aval-1S-paragraph-red-text">КонецЦикла;</span>
+										<br />
+										<br />
+										ТекстовыйДокумент<span class="aval-1S-paragraph-red-text">.</span>ДобавитьСтроку<span class="aval-1S-paragraph-red-text">(</span><span class="aval-1S-paragraph-black-text">"      "</span> 
+										<span class="aval-1S-paragraph-red-text">+</span> 
+										СтрокаИндекса 
+										<span class="aval-1S-paragraph-red-text">+</span>
+										<br />
+										<span class="aval-1S-paragraph-black-text">" ("</span> 
+										<span class="aval-1S-paragraph-red-text">+</span> 
+										СтрокаХраненияИндекса 
+										<span class="aval-1S-paragraph-red-text">+</span> 
+										<span class="aval-1S-paragraph-black-text">")"</span><span class="aval-1S-paragraph-red-text">);</span>
+										<br />
+										<br />		
+										<span class="aval-1S-paragraph-red-text">КонецЦикла;</span>
+										<br />
+										<br />
+									<span class="aval-1S-paragraph-red-text">КонецЦикла;</span>
+									<br />
+									<br />
+									<span class="aval-1S-paragraph-red-text">Возврат</span> 
+									ТекстовыйДокумент<span class="aval-1S-paragraph-red-text">;</span>
+									<br />
+									<br />
+								<span class="aval-1S-paragraph-red-text">КонецФункции</span>
+								<br />
+							</div>
+							Осталось подключить процедуру ВывестиСтруктуруТаблиц к обработчику на кнопке формы и запустить ее.
+							В итоге выполнения этой обработки получим текстовый файл с описанием структуры данных для конфигурации 1С Розница, редакция 1.0 (1.0.6.4), 
+							что позволит создать представление в базе данных.
+							<br />
+							<br />
+							<span class="aval-article-capital-word">Создание представления с данными розничных продаж при помощи утилиты pgAdmin III.</span>
+							<br />
+							При помощи pgAdmin III cоздаем представление, которое предоставит данные из документов типа ОтчетОРозничныхПродажах за период, 
+							начиная с 1 января 2013 года.
+							<br />
+							Конечно, согласно идеологии 1С, получать данные лучше из таблиц регистров (объекты 1С - таблицы, 
+							где хранится специальным образом обработанная информация), 
+							но в данном случае это не принципиально и нас устроит вариант получения данных из документов.
+							<br />
+							Имена таблиц и полей взяты из описания структуры данных 1С и соответствуют стандартной конфигурации 1С Розница, редакция 1.0 (1.0.6.4).
+							<div class="aval-pgAdmin-paragraph aval-pgAdmin-paragraph-black-text">
+								<span class="aval-pgAdmin-paragraph-green-text">-- View: "saleView"</span>
+								<br />
+								<span class="aval-pgAdmin-paragraph-green-text">-- DROP VIEW "saleView";</span>
+								<br />
+								<span class="aval-pgAdmin-paragraph-blue-text">CREATE OR REPLACE VIEW</span> 
+								<span class="aval-pgAdmin-paragraph-lilac-text">"saleView"</span> 
+								<span class="aval-pgAdmin-paragraph-blue-text">AS</span>
+								<br />
+								<span class="aval-pgAdmin-paragraph-blue-text">SELECT</span>
+								<br />
+								_document63._date_time AS datetimeofdoc, 
+								<br />
+								_reference32._description 
+								<span class="aval-pgAdmin-paragraph-blue-text">AS</span> 
+								title, 
+								<br />
+								_reference32._fld430 
+								<span class="aval-pgAdmin-paragraph-blue-text">AS</span> 
+								article, 
+								<br />
+								_document63_vt906._fld913 
+								<span class="aval-pgAdmin-paragraph-blue-text">AS</span> 
+								price,
+								<br /> 
+								_document63_vt906._fld914 
+								<span class="aval-pgAdmin-paragraph-blue-text">AS</span> 
+								cost
+								<br />
+								<span class="aval-pgAdmin-paragraph-blue-text">FROM</span> 
+								_document63 
+								<br />
+								<span class="aval-pgAdmin-paragraph-blue-text">LEFT JOIN</span> 
+								_document63_vt906 
+								<br />
+								<span class="aval-pgAdmin-paragraph-blue-text">ON</span> 
+								_document63_vt906._document63_idrref = _document63._idrref 
+								<br />
+								<span class="aval-pgAdmin-paragraph-blue-text">LEFT JOIN</span> 
+								_reference32 
+								<br />
+								<span class="aval-pgAdmin-paragraph-blue-text">ON</span> 
+								_reference32._idrref = _document63_vt906._fld908rref 
+								<br />
+								<span class="aval-pgAdmin-paragraph-blue-text">WHERE</span> 
+								_document63._date_time > to_date(<span class="aval-pgAdmin-paragraph-lilac-text">'2012-12-31'</span>, 
+								<span class="aval-pgAdmin-paragraph-lilac-text">'YYYY-MM-DD'</span>);
+								<br />
+								<span class="aval-pgAdmin-paragraph-blue-text">ALTER TABLE</span> 
+								<span class="aval-pgAdmin-paragraph-lilac-text">"saleView"</span>
+								<br />
+								<span class="aval-pgAdmin-paragraph-blue-text">OWNER TO</span> 
+								postgres;
+								<br />
+								<span class="aval-pgAdmin-paragraph-blue-text">GRANT ALL ON TABLE</span> 
+								<span class="aval-pgAdmin-paragraph-lilac-text">"saleView"</span> 
+								<span class="aval-pgAdmin-paragraph-blue-text">TO</span> 
+								postgres;
+							</div>
+							В запросе на создание представления были использованы операторы левого соединения.
+							<br />
+							<br />
+							<span class="aval-article-capital-word">Подключение к базе и получение данных о продажах в среде R.</span>
+							<br />
+							При использовании кода в среде R устанавливайте собственные параметры подключения.
+							<div  class="aval-R-paragraph aval-R-paragraph-black-text">
+								<span class="aval-R-paragraph-green-text">#подключим пакет sqldf, который позволит работать с postgreSQL</span>
+								<br />
+								<span class="aval-R-paragraph-green-text">#путь к пакету - для исключения ошибки, пользуйтесь подключением пакетов из интерфейса RStudio</span>
+								<br />
+								library<span class="aval-R-paragraph-grey-text">(</span>"sqldf", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.2"<span class="aval-R-paragraph-grey-text">)</span>
+								<br />
+                 				<span class="aval-R-paragraph-green-text">#установите свои параметры подключения к базе данных postgreSQL</span>
+                 				<br />
+								options<span class="aval-R-paragraph-grey-text">(</span>sqldf.RPostgreSQL.user 
+								=<span class="aval-R-paragraph-green-text">"your_DB_user"</span>,
+								<br /> 
+                 				sqldf.RPostgreSQL.password 
+                 				=<span class="aval-R-paragraph-green-text">"your_DB_password"</span>,
+                 				<br />
+                 				sqldf.RPostgreSQL.dbname 
+                 				=<span class="aval-R-paragraph-green-text">"your_dbname"</span>,
+                 				<br />
+                 				sqldf.RPostgreSQL.host 
+                 				=<span class="aval-R-paragraph-green-text">"your_ip_address_host"</span>,
+                 				<br />
+                 				sqldf.RPostgreSQL.port 
+                 				=<span class="aval-R-paragraph-blue-text">5432</span><span class="aval-R-paragraph-grey-text">)</span>
+                 				<br />
+                 				<span class="aval-R-paragraph-green-text">#получим данные из postgreSQL в среду R</span>
+                 				<br />
+                 				<span class="aval-R-paragraph-green-text">#обратите внимание на кавычки - если имя представления не будет обрамлено кавычками, то запрос не выполнится</span>
+                 				<br />
+                 				myTableSale <span class="aval-R-paragraph-grey-text">&lt;-</span> 
+                 				sqldf<span class="aval-R-paragraph-green-text">(</span><span class="aval-R-paragraph-green-text">'SELECT * FROM "saleView"'</span>, 
+                 				drv=<span class="aval-R-paragraph-green-text">'RPostgreSQL'</span><span class="aval-R-paragraph-grey-text">)</span>
+							</div>
+							<br />
+							Весь программный код, представленный в статье, протестирован и полностью работоспособен в соответсвующих для этого средах.
+							<br />
+							<br />
+							<span class="aval-article-capital-word">Резюме</span>
+							В статье показано, как использовать платформу 1С в качестве источника данных для последующих статистических исследований в среде 1С.
+							<br />
+							Схема с подключением к представлению позволяет уже на этапе получения данных производить предварительную кластеризацию данных средствами sql-запросов, 
+							гибко формируя выборку по параметрам, таким образом не перегружая R лишними данными.
+							<br />
+							В свою очередь среда R, обладая мощными аналитическими средствами, позволит очень быстро и качественно провести анализ и выявить скрытые закономерности, 
+							или уточнить уже формализованные метрики. 
+						</p>	
+					</div>
+					<div class="col-xs-12">
+						<h3 class="aval-footer-article">06.01.2016</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav class="navbar navbar-default aval-bottom-nav">
+			<div class="container">
+				<div class="navbar-default">
+					<noindex>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a class="aval-bottom-nav-content">
+								e-mail: a@a-val.ru
+							</a>
+						</li>
+					</ul>
+					</noindex>
+				</div>
+			</div>
+		</nav>	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	</body>
+</html>
