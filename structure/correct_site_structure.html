@@ -27,6 +27,7 @@
 		<script type="text/javascript" src="//vk.com/js/api/openapi.js?121"></script>
 	</head>
 	<body>
+		<div id="fb-root"></div>
 		<script>(function(d, s, id) {
 		  var js, fjs = d.getElementsByTagName(s)[0];
 		  if (d.getElementById(id)) return;
@@ -346,11 +347,21 @@
 					</div>
 				</div>
 			</div>
-			<div class="fb-comments" data-href="http://a-val.ru/structure/correct_site_structure.html" data-numposts="10"></div>
-			<div id="vk_comments"></div>
-			<script type="text/javascript">
-				VK.Widgets.Comments("vk_comments", {limit: 10, width: "550", attach: "*", autoPublish: "0"});
-			</script>
+			<ul class="nav nav-tabs">
+				<li role="presentation" class="active"><a data-toggle="tab" href="#aval-fb-comments"><i class="fa fa-facebook"></i></a></li>
+				<li role="presentation"><a data-toggle="tab" href="#aval-vk_comments"><i class="fa fa-vk"></i></a></li>
+			</ul>
+			<div class="tab-content">
+				<div id="aval-fb-comments" class="tab-pane fade in active">
+					<div class="fb-comments" data-href="http://a-val.ru/details/correct_site_structure.html" data-numposts="10"></div>
+				</div>
+				<div id="aval-vk_comments" class="tab-pane fade">
+					<div id="vk_comments"></div>
+					<script type="text/javascript">
+						VK.Widgets.Comments("vk_comments", {limit: 10, width: "550", attach: "*", autoPublish: "0"});
+					</script>
+				</div>
+			</div>
 		</div>
 		<nav class="navbar navbar-default aval-bottom-nav">
 			<div class="container">
